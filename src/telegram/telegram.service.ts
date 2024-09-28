@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ChatsService } from 'src/chats/chats.service';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const TelegramBot = require('node-telegram-bot-api');
 
 @Injectable()
@@ -18,17 +19,19 @@ export class TelegramService {
     this.bot.on('message', async (msg) => {
       const chatId = msg.chat.id;
       const text = msg.text.toLowerCase();
-    
+
       if (text === 'unsubscribe') {
         await this.chatsService.delete(msg.chat);
         Logger.log(`Chat ${chatId} has unsubscribed.`);
         return this.sendMessage(chatId, `You have been unsubscribed.`);
       }
-    
+
       await this.chatsService.create(msg.chat);
-      this.sendMessage(chatId, `You have been saved for further notifications. To unsubscribe, text me 'unsubscribe'.`);
+      this.sendMessage(
+        chatId,
+        `You have been saved for further notifications. To unsubscribe, text me 'unsubscribe'.`,
+      );
     });
-    
   }
 
   sendMessage(chatId: string, message: string): void {
@@ -37,10 +40,12 @@ export class TelegramService {
 
   async notifyAdmin(message: string): Promise<void> {
     const chats = await this.chatsService.getAll();
-    
+
     for (const chat of chats) {
       await this.bot.sendMessage(chat.id, message);
-      Logger.log(`Notified admin: [${chat.id}] ${chat.firstName} ${chat.lastName} @${chat.username}`);
+      Logger.log(
+        `Notified admin: [${chat.id}] ${chat.firstName} ${chat.lastName} @${chat.username}`,
+      );
     }
   }
 }

@@ -6,7 +6,7 @@ import { CreateChatDto } from './chat.create.dto';
 
 @Injectable()
 export class ChatsService {
-  constructor(@InjectModel(Chat.name) private model: Model<Chat>) { }
+  constructor(@InjectModel(Chat.name) private model: Model<Chat>) {}
 
   async create(dto: CreateChatDto): Promise<Chat> {
     try {
@@ -30,12 +30,12 @@ export class ChatsService {
   async delete(dto: CreateChatDto): Promise<Chat> {
     try {
       const chat = await this.model.findOneAndDelete({ id: dto.id }).exec();
-  
+
       if (!chat) {
         Logger.warn(`Chat not found for deletion: ${dto.id}`);
         throw new Error('Chat not found');
       }
-  
+
       Logger.log(`Chat deleted: ${dto.id}`);
       return chat;
     } catch (error) {
@@ -43,7 +43,7 @@ export class ChatsService {
       throw new Error('Unable to delete chat');
     }
   }
-  
+
   async getAll(limit: number = 200, page: number = 1): Promise<Chat[]> {
     const skip = (page - 1) * limit;
     return this.model.find().limit(limit).skip(skip).exec();

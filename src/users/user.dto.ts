@@ -1,5 +1,5 @@
 export class UserDto {
-	firstName: string;
-	lastName: string;
-	birthDate?: Date;
+  firstName: string;
+  lastName: string;
+  birthDate?: Date;
 }
