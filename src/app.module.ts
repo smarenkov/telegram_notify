@@ -9,10 +9,10 @@ import { MongooseModule } from '@nestjs/mongoose';
     ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
       }),
-      inject: [ConfigService],
     }),
     TelegramModule,
     ChatsModule,
