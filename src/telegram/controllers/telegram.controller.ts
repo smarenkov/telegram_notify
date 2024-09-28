@@ -1,7 +1,8 @@
 import { Controller } from '@nestjs/common';
-import { TelegramService } from './telegram.service';
+
 import { EventPattern, Payload } from '@nestjs/microservices';
-import { UserDto } from '../users/user.dto';
+import { TelegramService } from '../services/telegram.service';
+import { UserDto } from 'src/common/dto/user.dto';
 
 @Controller()
 export class TelegramController {

@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Chat } from './chat.schema';
-import { CreateChatDto } from './chat.create.dto';
+import { Chat } from '../models/chat.schema';
+import { CreateChatDto } from '../dto/chat.create.dto';
 
 @Injectable()
 export class ChatsService {
@@ -27,21 +27,25 @@ export class ChatsService {
     }
   }
 
-  async delete(dto: CreateChatDto): Promise<Chat> {
+  async delete(id: number): Promise<Chat> {
     try {
-      const chat = await this.model.findOneAndDelete({ id: dto.id }).exec();
+      const chat = await this.model.findOneAndDelete({ id: id }).exec();
 
       if (!chat) {
-        Logger.warn(`Chat not found for deletion: ${dto.id}`);
+        Logger.warn(`Chat not found for deletion: ${id}`);
         throw new Error('Chat not found');
       }
 
-      Logger.log(`Chat deleted: ${dto.id}`);
+      Logger.log(`Chat deleted: ${id}`);
       return chat;
     } catch (error) {
       Logger.error('Error deleting chat', error);
       throw new Error('Unable to delete chat');
     }
+  }
+
+  async getById(id: string): Promise<Chat> {
+    return this.model.findOne({ id });
   }
 
   async getAll(limit: number = 200, page: number = 1): Promise<Chat[]> {

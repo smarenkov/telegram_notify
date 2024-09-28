@@ -6,11 +6,11 @@ export class CreateChatDto {
   id: number;
 
   @IsString()
-  firstName: number;
+  firstName: string;
 
   @IsString()
-  lastName: number;
+  lastName: string;
 
   @IsString()
-  username: number;
+  username: string;
 }
