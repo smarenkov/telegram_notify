@@ -38,7 +38,6 @@ export class TelegramService {
       }
 
       if (text === '/start' || text === '/subscribe') {
-        await this.unsubscribe(chat.id);
         return this.sendMessage(chat.id, chat_already_subscribed);
       }
 
@@ -56,7 +55,7 @@ export class TelegramService {
 
   async subscribe(dto: CreateChatDto): Promise<Chat> {
     const chat = await this.chatsService.create(dto);
-    Logger.log(`Chat ${chat.id} has unsubscribed.`);
+    Logger.log(`Chat ${chat.id} has subscribed.`);
 
     return chat;
   }
