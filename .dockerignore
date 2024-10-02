@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.gitignore
+docker-compose.yaml
+Dockerfile*
+README.md
+*.log
+*.test.*
+*.lock
+.prettierrc
+.eslintrc.js
